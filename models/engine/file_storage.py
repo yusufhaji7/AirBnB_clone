@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import json
-from models.base_model.py import BaseModel
+from models.base_model import BaseModel
 """
 serializes to JSON and deserializes from JSON
 """
@@ -40,3 +40,5 @@ class FileStorage:
                     class_name = obj["__class__"]
                     del obj["__class__"]
                     self.new(eval(class_name)(**obj))
+        except FileNotFoundError:
+            pass
