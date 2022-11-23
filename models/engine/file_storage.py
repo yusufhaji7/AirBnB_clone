@@ -25,4 +25,18 @@ class FileStorage:
     def save(self):
         """serialize __objects to json"""
 
+        dictio = FileStorage.__objects
+        dict_obj = {obj: dictio[obj].to_dict() for obj in dictio.keys()}
+        with open(self.__file_path, "w") as f:
+            json.dump(dict_obj, f)
 
+    def reload(self):
+        """loads obj from a path file"""
+
+        try:
+            with open(FileStorage.__file_path, "r") as f:
+                dic_obj = json.load(f)
+                for obj in obj_dict.values():
+                    class_name = obj["__class__"]
+                    del obj["__class__"]
+                    self.new(eval(class_name)(**obj))
